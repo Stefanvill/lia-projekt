@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="sv" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${lia.companyName} + ' | LIA Detalj'">LIA Detalj</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light min-vh-100">
+<div th:replace="~{fragments/logout :: topRightLogout}"></div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header med breadcrumbs -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a class="text-decoration-none" href="/lia">
+                            <i class="bi bi-list-ul"></i> Alla LIA-sökningar
+                        </a>
+                    </li>
+                    <li aria-current="page" class="breadcrumb-item active">
+                        Detalj <span th:text="${lia.id}">ID</span>
+                    </li>
+                </ol>
+            </nav>
+
+            <div class="card shadow-lg border-0">
+                <!-- STORE COMPANY NAME -->
+                <div class="card-header bg-primary text-white px-4 py-4 text-center">
+                    <h1 class="display-5 fw-bold mb-0" th:text="${lia.companyName}">Företag</h1>
+                    <span class="badge fs-5 mt-2" th:switch="${lia.status}">
+                        <span class="badge bg-warning text-dark" th:case="1">Inget svar</span>
+                        <span class="badge bg-danger" th:case="2">Nekat</span>
+                        <span class="badge bg-info" th:case="3">Kontaktat mig</span>
+                        <span class="badge bg-success" th:case="4">Accepterat</span>
+                    </span>
+                </div>
+
+                <div class="card-body p-4">
+                    <!-- Kontaktinfo -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-telephone text-primary"></i> Telefon</h6>
+                            <p class="mb-0 fs-5 fw-semibold" th:text="${lia.phoneNumber}">Telefonnummer</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-envelope text-primary"></i> E-post</h6>
+                            <p class="mb-0 fs-5 fw-semibold" th:text="${lia.email}">email@example.com</p>
+                        </div>
+                    </div>
+
+                    <!-- Webb & Kontaktperson -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-globe text-primary"></i> Webbplats</h6>
+                            <a class="text-decoration-none fs-5 fw-semibold" th:href="${lia.website}"
+                               th:text="${lia.website}">www.example.com</a>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-person text-primary"></i> Kontaktperson</h6>
+                            <p class="mb-0 fs-5 fw-semibold" th:text="${lia.contactPerson}">Namn</p>
+                        </div>
+                    </div>
+
+                    <!-- Adress -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h6><i class="bi bi-geo-alt text-primary"></i> Adress</h6>
+                            <p class="mb-0 fs-5 fw-semibold" th:text="${lia.address + ', ' + lia.city}">Adress, Stad</p>
+                        </div>
+                    </div>
+
+                    <!-- Noteringar -->
+                    <div class="row">
+                        <div class="col-12">
+                            <h6><i class="bi bi-journal-text text-primary"></i> Noteringar</h6>
+                            <p class="mb-0 fs-5 text-muted" th:text="${lia.notes}">Inga noteringar...</p>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <hr class="my-4">
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-outline-primary btn-lg" th:href="@{/lia/{id}/edit(id=${lia.id})}">
+                            <i class="bi bi-pencil"></i> Redigera
+                        </a>
+                        <a class="btn btn-outline-secondary btn-lg" href="/lia">
+                            <i class="bi bi-arrow-left"></i> Tillbaka
+                        </a>
+                        <form method="post" th:action="@{/lia/{id}/delete(id=${lia.id})}">
+                            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                            <button class="btn btn-outline-danger btn-lg"
+                                    onclick="return confirm('Är du säker på att du vill ta bort detta?');"
+                                    type="submit">
+                                <i class="bi bi-trash"></i> Ta bort
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Footer med datum -->
+                <div class="card-footer bg-light text-muted small py-3">
+                    <div class="d-flex justify-content-between">
+                        <span>Skapad: <span
+                                th:text="${#temporals.format(lia.createdAt, 'yyyy-MM-dd HH:mm')}"></span></span>
+                        <span>Uppdaterad: <span
+                                th:text="${#temporals.format(lia.updatedAt, 'yyyy-MM-dd HH:mm')}"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

@@ -1,10 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Redigera LIA-post</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-$END$
+<body class="bg-light">
+<div th:replace="~{fragments/logout :: topRightLogout}"></div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Redigera LIA-sökning</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" th:action="@{/lia/{id}(id=${lia.id})}" th:object="${lia}">
+
+                        <!-- Dölj ID (behövs för update) -->
+                        <input th:field="*{id}" type="hidden">
+
+                        <div class="mb-3">
+                            <label class="form-label" for="companyName">Företagsnamn *</label>
+                            <input class="form-control" id="companyName" th:field="*{companyName}" type="text">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="phoneNumber">Telefonnummer</label>
+                            <input class="form-control" id="phoneNumber" th:field="*{phoneNumber}" type="tel">
+                        </div>
+
+                        <!-- STATUS DROPDOWN -->
+                        <div class="mb-3">
+                            <label class="form-label" for="status">Status</label>
+                            <select class="form-select" id="status" th:field="*{status}">
+                                <option value="1">1 - Inget svar</option>
+                                <option value="2">2 - Svarat nej</option>
+                                <option value="3">3 - Kontaktat mig</option>
+                                <option value="4">4 - Svarat ja</option>
+                            </select>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="email">E-post</label>
+                                <input class="form-control" id="email" th:field="*{email}" type="email">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="website">Webbplats</label>
+                                <input class="form-control" id="website" th:field="*{website}" type="url">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="contactPerson">Kontaktperson</label>
+                                <input class="form-control" id="contactPerson" th:field="*{contactPerson}" type="text">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="city">Stad</label>
+                                <input class="form-control" id="city" th:field="*{city}" type="text">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="address">Adress</label>
+                            <input class="form-control" id="address" th:field="*{address}" type="text">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="notes">Noteringar</label>
+                            <textarea class="form-control" id="notes" rows="4" th:field="*{notes}"></textarea>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary" type="submit">Uppdatera</button>
+                            <a class="btn btn-secondary" th:href="@{/lia}">Avbryt</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
