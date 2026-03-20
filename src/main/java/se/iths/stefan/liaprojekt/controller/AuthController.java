@@ -23,7 +23,7 @@ public class AuthController {
     // Visa login-sidan
     @GetMapping("/login")
     public String login(Model model, Authentication authentication) {
-        if (authentication != null && authentication.isAuthenticated()) {
+        if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getName())) {
             return "redirect:/lia";
         }
         model.addAttribute("loginError", "Fel användarnamn eller lösenord");

@@ -15,7 +15,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a class="text-decoration-none" href="/lia">
+                        <a class="text-decoration-none" th:href="@{/lia}">
                             <i class="bi bi-list-ul"></i> Alla LIA-sökningar
                         </a>
                     </li>
@@ -85,7 +85,7 @@
                         <a class="btn btn-outline-primary btn-lg" th:href="@{/lia/{id}/edit(id=${lia.id})}">
                             <i class="bi bi-pencil"></i> Redigera
                         </a>
-                        <a class="btn btn-outline-secondary btn-lg" href="/lia">
+                        <a class="btn btn-outline-secondary btn-lg" th:href="@{/lia}">
                             <i class="bi bi-arrow-left"></i> Tillbaka
                         </a>
                         <form method="post" th:action="@{/lia/{id}/delete(id=${lia.id})}">
