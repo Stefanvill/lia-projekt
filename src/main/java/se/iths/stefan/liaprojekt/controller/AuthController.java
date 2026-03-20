@@ -20,6 +20,14 @@ public class AuthController {
         this.userService = userService;
     }
 
+    @GetMapping("/")
+    public String home(Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getName())) {
+            return "redirect:/lia";
+        }
+        return "redirect:/login";
+    }
+
     // Visa login-sidan
     @GetMapping("/login")
     public String login(Model model, Authentication authentication) {
